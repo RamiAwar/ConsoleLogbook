@@ -52,6 +52,9 @@ def menu_loop():
     # Loop over options as long as user doesn't quit
     while choice != 'q':
 
+        # Clear screen
+        clear_screen()
+
         # Loop over menu items and render each
         print("Enter 'q' to quit.")
         for key, value in menu.items():
@@ -63,6 +66,7 @@ def menu_loop():
 
         # Call user-chosen function
         if choice in menu:
+            clear_screen()
             menu[choice]()
 
 
@@ -80,7 +84,7 @@ def add_entry():
     if data:
         if input('Save entry? [y/n]').lower().strip() == 'y':
             Entry.create(content=data)
-            print("Saved successfully!\n")
+            print("Success!\n")
 
 
 def view_entries(search_query=None):
@@ -95,11 +99,12 @@ def view_entries(search_query=None):
 
     # Loop over entries and print out contents and timestamp
     for entry in query:
+        clear_screen()
         timestamp = entry.timestamp.strftime('%A %B %d, %Y %I:%M%p')
         print(timestamp)
         print('=' * len(timestamp))
         print(entry.content)
-        print("\n")
+        print("\n" + '=' * len(timestamp))
         print('n) next entry')
         print('d) delete entry')
         print('q) return to main menu')
@@ -108,7 +113,6 @@ def view_entries(search_query=None):
             break
         elif action == 'd':
             delete_entry(entry)
-        print("\n")
 
 def search_entries():
     """ Search entries for a string """
@@ -122,6 +126,9 @@ def delete_entry(entry):
         entry.delete_instance()
         print("------------\nEntry deleted.\n------------\n")
 
+
+def clear_screen():
+    os.system('cls' if os.name == 'nt' else 'clear')
 
 # Switch-statement like syntax for menu construction
 menu = OrderedDict([
