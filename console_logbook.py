@@ -101,9 +101,13 @@ def view_entries(search_query=None):
         print(entry.content)
         print("\n")
         print('n) next entry')
+        print('d) delete entry')
         print('q) return to main menu')
-        if input('Action: ').lower().strip() == 'q':
+        action = input('Action: ').lower().strip()
+        if action == 'q':
             break
+        elif action == 'd':
+            delete_entry(entry)
         print("\n")
 
 def search_entries():
@@ -112,9 +116,12 @@ def search_entries():
     view_entries(input('Search query: '))
 
 
-def delete_entry():
+def delete_entry(entry):
     """ Delete certain entry """
-    pass
+    if input("Are you sure you want to delete this? [y/n]").lower().strip() == 'y':
+        entry.delete_instance()
+        print("------------\nEntry deleted.\n------------\n")
+
 
 # Switch-statement like syntax for menu construction
 menu = OrderedDict([
